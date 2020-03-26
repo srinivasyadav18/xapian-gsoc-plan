@@ -404,7 +404,7 @@ First Month :
   June 15th-20th :
       * Rewrap the QueryParser , Query class for enums type conversions and provide return error for the methods for corresponding
         functions which throw exception in c++.(2 days)
-      * Code for constructors and overloaded functions becuase of rewrapping.(2 days)
+      * Adding additional code for constructors and overloaded functions becuase of rewrapping.(2 days)
       * Document these classes.(2 days)   
   June 22nd-27th :
       * Support EsetIterator , MsetIterator classes by rewrapping the swig generated interfaces and adding additional go code 
@@ -450,20 +450,20 @@ Second Month :
 Third Month : 
   August 3rd-8th :
       * Support for Exapand Decider, all the derived classes of Exapand Decider are 
-        embedded inside another interface provided by swig.
-        In go lang inheritence is achieved by embeddeding one interface in another
+        embedded inside another interface provided by swig.(4 days)
+        In go lang inheritence is achieved by embeddeding one interface in another.
       
-      * Document for usage of Exapand Decider and its derived classes.
+      * Document for usage of Exapand Decider and its derived classes.(2 days)
   August 10th-15th :
       * Since erros are values and they would be returned to the respective function so far,
-        Now provide all the errors in except.i file.
+        Now provide all the errors in except.i file.(3 days)
       
-      * Provide the standard examples in docs (simple index, simple search).
+      * Provide the standard examples in docs (simple index, simple search).(3 days)
   August 17th-22nd :
       * implementation of go get feature (3 days)
       
       * Providing tests far classes implementend so far with go test(package) and edit the Makefile for adding new tests 
-        and provide tests for go get.
+        and provide tests for go get.(3 days)
   August 24th-31st : Final Week.
       * Evaluation Week and submission.
 
