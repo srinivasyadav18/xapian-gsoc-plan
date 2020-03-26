@@ -200,7 +200,7 @@ Motivations
 
 My main areas of interest includes C++ and Go.I like the thread support provided in  go and c++.
 As go achieves concurrency in two ways one using goroutines and other using channels . goroutines are often called 
-light-weight threads as they occupy very less stack space(8KB) compared to threads in c++(1-2MB) , java and more over many go threads can be multiplexed
+light-weight threads as they occupy very less stack space(8KB) compared to posix threads(1-2MB) and more over many go threads can be multiplexed
 to one os thread where as pthreads occupy one OS thread that could be huge performance boost 
 when dealing with millions of go threads which are going to perform tiny tasks(go routines) 
 (here is an intresting article on go threads vs java threads https://rcoh.me/posts/why-you-can-have-a-million-go-routines-but-only-1000-java-threads/).
