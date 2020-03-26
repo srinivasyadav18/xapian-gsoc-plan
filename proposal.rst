@@ -379,7 +379,7 @@ Plan :
         (Im not quite familiar with classes related to latlong, MatchSpy, KeyMaker).
 
 Community Bonding Period :
-      * Implement the build system for bindings using the existing wrapper(for linux) and review it with the mentors.
+      * Implement the build system properly for bindings in go using the existing wrapper(for linux) and review it with the mentors.
       * Understand Xapian classes and wrappers in depth.
 
 First Month : 
