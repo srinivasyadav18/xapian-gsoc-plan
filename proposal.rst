@@ -370,13 +370,17 @@ Plan :
         Most of the classes Require rewrapping to provide a simple interface as SWIG generated 
         interfaces for most of the classes is not that simple to use.
       
+      * Go has its own test package for testing the packages which would be put in Makefile.
+
       * In month April First Two weeks - Understand go build system deeper and work on it if it can be integrated with libtool or 
         possibly prepare a plan to create a new separate build system with only auto tools.
       * Next Two weeks - Understand Xapian implementation of existing bindings and Xapian classes deeper
         (Im not quite familiar with classes related to latlong, MatchSpy, KeyMaker).
 
 Community Bonding Period :
-      * Implement the build system for complete wo
+      * Implement the build system for bindings using the existing wrapper(for linux) and review it with the mentors.
+      * Understand Xapian classes and wrappers in depth.
+      
 First Month : 
   June 1st-6th  :
       * Support Iterators (Position,Posting,Term,Value)
@@ -437,7 +441,7 @@ Second Month :
       
       * Review the work done so far and fix the bugs if any.(1 day)
       
-      * Provide automated tests far classes implementend so far. (1 day)
+      * Provide tests far classes implementend so far with go test(package) and edit the Makefile for adding new tests. (1 day)
   July 27th:
       * Phase 2 Evaluation.
 
@@ -449,16 +453,15 @@ Third Month :
       
       * Document for usage of Exapand Decider and its derived classes.
   August 10th-15th :
-      * Support for Match Devider.
-      
-      * Support for KeyMaker and Posting source classes it time is permissable.
-  August 17th-22nd :
       * Since erros are values and they would be returned to the respective function so far,
-         Now provide all the errors in except.i file.
+        Now provide all the errors in except.i file.
       
       * Provide the standard examples in docs (simple index, simple search).
+  August 17th-22nd :
+      * implementation of go get feature (3 days)
       
-       Provided automated tests for the all the classes implemented.
+      * Providing tests far classes implementend so far with go test(package) and edit the Makefile for adding new tests 
+        and provide tests for go get.
   August 24th-31st : Final Week.
       * Evaluation Week and submission.
 
