@@ -320,6 +320,7 @@ In this summer I would like to do three things:
 
 Plan :
       * Go is Statically-typed language and each variable is of only one type.
+        
         Example :
         /*
         type Integer int
@@ -346,7 +347,7 @@ Plan :
         constructor and function overloading.
         (code for rewrapping and overloading )
          
-      *  Go suppots Iterators by natural syntax using channels and convential methods such as Iter.Next().
+      * Go suppots Iterators by natural syntax using channels and convential methods such as Iter.Next().
         1. Using channels one could use for-range construct.
         for i := range container.Iter(){
           i.GetData() // methods to get information from the iterator at that position.
@@ -359,11 +360,11 @@ Plan :
         begin and end iterators in call as below.
         /* start,end := doc.Termlist() */ 
 
-      *  Go supports errors as return values . A language like c++ have try catch block Go has three constructs for dealing
+      * Go supports errors as return values . A language like c++ have try catch block Go has three constructs for dealing
         with exceptions, they are panic defer and recover.A Panic is similar to an exception which can occur an runtime exception.
         C++ exceptions can be handled in go from swig wrappers as follows()
 
-      *  Go has its own documentation tool for generating documentation for the go code . Providing documentation for the classes each week
+      * Go has its own documentation tool for generating documentation for the go code . Providing documentation for the classes each week
         that I work on particular week.
         Most of the classes Require rewrapping to provide a simple interface.
 
