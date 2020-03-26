@@ -536,3 +536,5 @@ References :
     Cgo documentation - https://golang.org/cmd/cgo/
 
     Go Testing package - https://golang.org/pkg/testing/
+
+    Go doc tool - https://blog.golang.org/godoc
