@@ -341,18 +341,20 @@ Plan :
         Rewrap the go code(which does conversions before passing to the that particular function)
         in to wrapper for enums using swig %insert(go_wrapper).(https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/example.i#L51)
       
-      * Go doesnt support constructors but this can be done using an extra helper that function takes an slice of interfaces
+      * Go does not support constructors but this can be done with an extra helper function that takes an slice of interfaces
         which swig does by default during the wrapping but this should be done explicitly when re-wrapped.
-        interface{} in golang means any type. Slice of interfaces mean collection of interfaces quantity known at runtime(resizable array).
+        interface{} in golang means any type. Slice of interfaces mean collection of interfaces(resizable array).
         Go supports variable number of arguments of different type to functions as func myfun(a ...interface{}) which is used during 
         constructor and function overloading.
          
       * Go suppots Iterators by natural syntax using channels and convential methods such as Iter.Next().
         
         1. Using channels one could use for-range construct.
+
         for i := range container.Iter(){
           i.GetData() // methods to get information from the iterator at that position.
         }
+
         2. Using methods such as Iter.Next() as used in Go lang standard library (Container List https://golang.org/pkg/container/list/).
          
         Both standard method /* for iter.Next(){ ... code } */ and /* for-range construct would be made available for user
@@ -364,17 +366,18 @@ Plan :
 
       * Go supports errors as return values . A language like c++ have try catch block Go has three constructs for dealing
         with exceptions, they are panic defer and recover.A Panic is similar to an exception which can occur an runtime exception.
-        C++ exceptions can be handled in go from swig wrappers as follows(https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/example.i#L16)
+        C++ exceptions can be handled in go from swig wrappers as follows(https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/example.i#L16).
+        Which ever class function throws an exception in c++ , the wrapped function in Go returns the error value.
 
       * Go has its own documentation tool for generating documentation for the go code . Providing documentation for the classes each week
         that I work on particular week.
-        Most of the classes Require rewrapping to provide a simple interface as SWIG generated 
-        interfaces for most of the classes is not that simple to use.
+        Most of the classes require rewrapping to provide a simple interface as SWIG generated 
+        interfaces is not that simple to use.
       
       * Go has its own test package for testing the packages which would be put in Makefile.
         (https://golang.org/pkg/testing/)
 
-      * In month April First Two weeks - Understand go build system deeper and work on it if it can be integrated with libtool or 
+      * In month April, First Two weeks - Understand go build system deeper and work on it if it can be integrated with libtool or 
         possibly prepare a plan to create a new separate build system with only auto tools.
       * Next Two weeks - Understand Xapian implementation of existing bindings and Xapian classes deeper
         (Im not quite familiar with classes related to latlong, MatchSpy, KeyMaker).
@@ -385,7 +388,7 @@ Community Bonding Period :
 
 First Month : 
   June 1st-6th  :
-      * Support Iterators (Position,Posting,Term,Value)
+      * Support Iterators (Position,Posting,Term,Value).
 
       * Change all the function names which are to be exported to PascalCase.(1 day)
 
@@ -397,9 +400,9 @@ First Month :
       * Document the iterators interface using godoc and reStructuredText file.(1 day)
   
   June 8th-13th :
-      * Rewrap the Database class for providing errors to the functions that throw errors.(3 days)
+      * Rewrap the Database class for providing errors(as return values) to the functions that throw errors.(3 days)
       
-      * Rewrap the Document class for rewrapped iterators interfaces .(2 days)
+      * Rewrap the Document class for rewrapped iterators interfaces.(2 days)
       
       * Document both the classes.(1 day)
   June 15th-20th :
