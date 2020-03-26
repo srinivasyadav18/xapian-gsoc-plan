@@ -360,14 +360,14 @@ Plan :
         Both standard method /* for iter.Next(){ ... code } */ and /* for-range construct would be made available for user
         (these are just like auto-ranged based loops in c++) */
          
-        Go support multiple return values , therefore rewrapping the interfaces which return iterators to return both 
-        begin and end iterators in function call as below.
+        Go support multiple return values , therefore rewrapping the interfaces which return iterators to both 
+        begin and end iterators in one function call as below.
         /* start,end := doc.Termlist() */ 
 
       * Go supports errors as return values . A language like c++ have try catch block Go has three constructs for dealing
         with exceptions, they are panic defer and recover.A Panic is similar to an exception which can occur an runtime exception.
         C++ exceptions can be handled in go from swig wrappers as follows(https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/example.i#L16).
-        Which ever class function throws an exception in c++ , the wrapped function in Go returns the error value.
+        Which ever class function throws an exception in c++ , the wrapped function in Go returns the error as value.
 
       * Go has its own documentation tool for generating documentation for the go code . Providing documentation for the classes each week
         that I work on particular week.
@@ -424,7 +424,7 @@ First Month :
 Second Month :
   July 29th-4th :
       * Rewrap the Enquire class and all the overloaded functions,constructors(2 days) and
-        functions which return the iterators to the interface which will be provided in go and 
+        functions which return the iterators to the interface which will be provided in go  
         with multiple return values at once.(2 days)
       
       * Document Enquire class and small code examples (2 days).
@@ -435,7 +435,7 @@ Second Month :
       
       * Document both the classes.(1 day)
   July 13th-18th :
-      * Rewrap the TermGenerator class and provide the conversions for enum.(3 days)
+      * Rewrap the TermGenerator class and provide the type conversions for enum.(3 days)
       
       * Code for constructors and overloaded functions becuase of rewrapping.(2 days)
 
@@ -460,7 +460,7 @@ Third Month :
       * Document for usage of Exapand Decider and its derived classes.(2 days)
   August 10th-15th :
       * Since erros are values and they would be returned to the respective function so far,
-        Now provide all the errors in except.i file.(3 days)
+        now provide all the errors except.i file.(3 days)
       
       * Provide the standard examples in docs (simple index, simple search).(3 days)
   August 17th-22nd :
