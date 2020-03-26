@@ -319,7 +319,7 @@ In this summer I would like to do three things:
         or not.
 
 Plan :
-      * Go is Statically-typed language and each variable is of only one type.
+      * Go is Statically-typed language and each variable can  only be of one type.
         
         Example :
         /*
@@ -334,11 +334,11 @@ Plan :
         Even though internally Integer is an int but both are different types.
         Code and error here (https://pastebin.com/bvz5QLZJ).
 
-        The way swig wrapps the enums is not that natural and there should type conversions before passing to appropriate 
+        The way swig wraps the enums is not that natural and there should type conversions before passing to appropriate 
         function for proper functioning. (https://pastebin.com/X8K1q9Rh)
 
         Rewrap the go code(which does conversions before passing to the that particular function)
-        in to wrapper for enums using swig %insert(go_wrapper).
+        in to wrapper for enums using swig %insert(go_wrapper).(https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/example.i#L51)
       
       * Go doesnt support constructors but this can be done using an extra helper that function takes an slice of interfaces
         which swig does by default during the wrapping but this should be done explicitly when re-wrapped.
