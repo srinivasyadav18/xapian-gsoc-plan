@@ -325,12 +325,12 @@ Plan :
         /*
         type Integer int
             
-        var var_a Integer =10;
-        var var_b int = 20
+        var VarA Integer =10;
+        var VarB int = 20
 
         func example(x int) */
 
-        This produces an error when  var_a is passed to func.
+        This produces an error when  VarA is passed to func.
         Even though internally Integer is an int but both are different types.
         Code and error here (https://pastebin.com/bvz5QLZJ).
 
@@ -363,14 +363,15 @@ Plan :
 
       * Go supports errors as return values . A language like c++ have try catch block Go has three constructs for dealing
         with exceptions, they are panic defer and recover.A Panic is similar to an exception which can occur an runtime exception.
-        C++ exceptions can be handled in go from swig wrappers as follows()
+        C++ exceptions can be handled in go from swig wrappers as follows(https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/example.i#L16)
 
       * Go has its own documentation tool for generating documentation for the go code . Providing documentation for the classes each week
         that I work on particular week.
-        Most of the classes Require rewrapping to provide a simple interface.
+        Most of the classes Require rewrapping to provide a simple interface as SWIG generated 
+        interfaces for most of the classes is not that simple to use.
 
 First Month : 
-  Week1 :
+  June 1st-6th  :
       * Support Iterators (Position,Posting,Term,Value)
       * Change all the function names which are to be exported to PascalCase.
          (Go uses Pascal Case when exporting functions from a package and camelCase for unexported functions.)
@@ -378,53 +379,58 @@ First Month :
          and adding necessory go code using %insert(go_wrapper) in go.i swig interface file.
       * Document the iterators interface using godoc and reStructuredText file.
   
-  Week2 :
+  June 8th-13th :
       * Rewrap the Database class for providing errors to the functions that throw errors.
       * Rewrap the Document class for returning two iterators at once.
       * Document both the classes.
-  week3 :
+  June 15th-20th :
       * Rewrap the QueryParser , Query class for enums type conversions and provide return error for the methods for corresponding
          functions which throw exception in c++.
       * Document these classes.   
-  Week4 :
+  June 22nd-27th:
       * Support EsetIterator , MsetIterator classes by rewrapping the swig generated interfaces and adding additional go code 
          for iteration.
       * Document EsetIterator,MsetIterator,ESet,MSet,RSet classes using godoc and reStructuredText.
       * Providing Automated tests for classes so far implemented.
-     
+   June 29th :
+      * Phase 1 Evaluation.
+
 Second Month :
-  Week5 :
+  July 29th-4th :
       * Rewrap the Enquire class and all the overloaded functions,constructors and
          functions which return the iterators to the interface which will be provided in go and 
          with multiple return values at once.
       * Document Enquire class.
-  Week6 :
+  July 6th-11th :
       * Rewrap the Stem class and Writable Database class and provide errors as return values for 
          the functions which throw.
       * Document both the classes.
-  Week7 :
+  July 13th-18th :
       * Rewrap the TermGenerator class and provide the conversions for enum.
       * Document the TermGenerator class.
-  Week8 :
+  July 20th-25th:
       * Support Range Processors and Field Processors.
-      * Review the work so far and fix the bugs if any.
-      * Provide automated tests so far 
+      * Document both the Classes and demonstrate the usage of derived classes.
+      * Review the work done so far and fix the bugs if any.
+      * Provide automated tests far classes implementend so far. 
+  July 27th:
+      * Phase 2 Evaluation.
 
 Third Month : 
-  Week9 :
+  August 3rd-8th :
       * Support for Exapand Decider, all the derived classes of Exapand Decider are 
          embedded inside another interface provided by swig.
          In go lang inheritence is achieved by embeddeding one interface in anothe.
       * Document for usage of Exapand Decider and its derived classes.
-  Week10 :
+  August 10th-15th :
       * Support for Match Devider.
       * Support for KeyMaker and Posting source classes it time is permissable.
-  Week11 :
+  August 17th-22nd :
       * Since erros are values and they would be returned to the respective function so far,
          Now provide all the errors in except.i file.
       * Provide the standard examples in docs (simple index, simple search).
-  Week12 :
       * Provided automated tests for the all the classes implemented.
+  August 24th-31st : Final Week.
       * Evaluation Week and submission.
 
 Previous Discussion of your Project
@@ -473,5 +479,14 @@ you plan to use, please give details.**
 .. to clearly identify that code (and keep existing licensing and copyright
 .. details intact), and to check with the mentors that it is OK to use.
 
-I am using the existing xapian-headers.i and xapian-head.i from xapian ,
+I am using the existing xapian-headers.i and xapian-head.i from xapian,
 apart from them I am not using any other.
+
+References :
+    Sample prototype for how rewrapping is done - https://github.com/srinivasyadav18/xapian-gsoc-plan
+    Iterator Pattern used in Golang Standard library - https://golang.org/pkg/container/list/
+    Iterator Pattern (for-range) - http://www.golangpatterns.info/object-oriented/iterators
+    Errors in Golang - https://blog.golang.org/error-handling-and-go
+    Swig Support for Golang - http://www.swig.org/Doc4.0/Go.html
+    Swig Insertion of Additional Go code into wrapper - http://www.swig.org/Doc4.0/Go.html#Go_adding_additional_code
+    Cgo documentation - https://golang.org/cmd/cgo/
