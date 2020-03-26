@@ -201,7 +201,7 @@ Motivations
 My main areas of interest includes C++ and Go.I like the thread support provided in  go and c++.
 As go achieves concurrency in two ways one using goroutines and other using channels . Go threads are often called 
 light-weight threads as they occupy very less stack compared to threads in c++ , java and more over many go threads can be multiplexed
-to one os thread where as pthreads in c and threads in c++ occupy on OS thread that could be huge performance boost 
+to one os thread where as pthreads occupy one OS thread that could be huge performance boost 
 when dealing with millions of go threads which are going to perform tiny tasks(go routines) 
 (here is an article on go threads vs java threads https://rcoh.me/posts/why-you-can-have-a-million-go-routines-but-only-1000-java-threads/)
 I have previously used cgo and swig in small projects(Implementing fourier transformations in go at c speed as 
@@ -215,8 +215,8 @@ xapian in Go.
 .. do and how your project will improve things for them.
 
 As Go lang is emerging now a days rapidly and its being used in servers and distributed systems,
-providing a Go API for the people who want to use xapian search engine in thier servers would be a huge benefit.
-It would be benificial for Golang community ,swig and xapian. 
+providing a Go API for the people who want to use Xapian search engine in thier servers would be a huge benefit.
+It would be benificial for Golang community ,Swig and Xapian. 
 
 Project Details
 ---------------
@@ -252,7 +252,7 @@ planned?**
 
 I am confident enough that the project would be implemented and completed properly on time.
 If in case some thing goes wrong , I would continue the work on go bindnigs after GSoC timeline as I am very much 
-interested in this project and love to contribute to xapian and woud like to maintain xapian go bindings Im allowed to.
+interested in this project and love to contribute to xapian and woud like to maintain xapian go bindings if Im allowed to.
 (Later after GSoC period)
 
 Project Timeline
@@ -319,56 +319,55 @@ In this summer I would like to do three things:
         or not.
 
 Plan :
-      --*  Go is Statically-typed language and each variable is of only one type.
-            Example :
-            /*
-            type Integer int
+      * Go is Statically-typed language and each variable is of only one type.
+        Example :
+        /*
+        type Integer int
             
-            var a Integer =10
-            var b int = 20
+        var a Integer =10
+        var b int = 20
 
-            func example(x int); */
+        func example(x int); */
 
-            This produces an error when a (variable) is passed to func.
-            Even though internally Integer is an int but both are different types.
-            Code and error here (https://pastebin.com/bvz5QLZJ).
+        This produces an error when a (variable) is passed to func.
+        Even though internally Integer is an int but both are different types.
+        Code and error here (https://pastebin.com/bvz5QLZJ).
 
-            The way swig wrapps the enums is not that natural and there should type conversions before passing to appropriate 
-            happening function for proper functioning. (https://pastebin.com/X8K1q9Rh)
+        The way swig wrapps the enums is not that natural and there should type conversions before passing to appropriate 
+        happening function for proper functioning. (https://pastebin.com/X8K1q9Rh)
 
-            Rewrap the go code(which does conversions before passing to the that particular function)
-            in to wrapper for enums using swig %insert(go_wrapper).
+        Rewrap the go code(which does conversions before passing to the that particular function)
+        in to wrapper for enums using swig %insert(go_wrapper).
       
-      --*  Go doesnt support constructors but this can be done using an extra helper function takes an slice of interfaces
-            which swig does by default during the wrapping but this should done explicitly when re-wrapped.
-            interface{} in golang means any type. slice of interfaces mean collection of interfaces quantity known at runtime(resizable array).
-            Go supports vardiable number of arguments of different type to functions as func myfun(a ...interface{}) which is used during 
-            constructor and function overloading.
-            (code for rewrapping and overloading )
+      * Go doesnt support constructors but this can be done using an extra helper function takes an slice of interfaces
+        which swig does by default during the wrapping but this should done explicitly when re-wrapped.
+        interface{} in golang means any type. slice of interfaces mean collection of interfaces quantity known at runtime(resizable array).
+        Go supports vardiable number of arguments of different type to functions as func myfun(a ...interface{}) which is used during 
+        constructor and function overloading.
+        (code for rewrapping and overloading )
          
-      --*  Go suppots Iterators by natural syntax using channels and convential methods such as Iter.Next().
-            1. Using channels one could use for-range construct.
-            for i := range container.Iter(){
-              i.GetData() // methods to get information from the iterator at that position.
-            }
-            2. Using methods such as Iter.Next() as used in Go lang standard library (Container List https://golang.org/pkg/container/list/).
+      *  Go suppots Iterators by natural syntax using channels and convential methods such as Iter.Next().
+        1. Using channels one could use for-range construct.
+        for i := range container.Iter(){
+          i.GetData() // methods to get information from the iterator at that position.
+        }
+        2. Using methods such as Iter.Next() as used in Go lang standard library (Container List https://golang.org/pkg/container/list/).
          
-            Both standard method /* for iter.Next(){ ... code } */ and /* for-range construct would be made available for user */
+        Both standard method /* for iter.Next(){ ... code } */ and /* for-range construct would be made available for user */
          
-            Go support multiple return values , therefore rewrapping the interfaces which return iterators to return both 
-            begin and end iterators in call as below.
-            /* start,end := doc.Termlist() */ 
+        Go support multiple return values , therefore rewrapping the interfaces which return iterators to return both 
+        begin and end iterators in call as below.
+        /* start,end := doc.Termlist() */ 
 
-      --*  Go supports errors as return values . A language like c++ have try catch block Go has three constructs for dealing
-            with exceptions, they are panic defer and recover.A Panic is similar to an exception which can occur an runtime exception.
-            C++ exceptions can be handled in go from swig wrappers as follows()
+      *  Go supports errors as return values . A language like c++ have try catch block Go has three constructs for dealing
+        with exceptions, they are panic defer and recover.A Panic is similar to an exception which can occur an runtime exception.
+        C++ exceptions can be handled in go from swig wrappers as follows()
 
-      --*  Go has its own documentation tool for generating documentation for the go code . Providing documentation for the classes each week
-            that I work on particular week.
-            Most of the classes Require rewrapping to provide a simple interface.
+      *  Go has its own documentation tool for generating documentation for the go code . Providing documentation for the classes each week
+        that I work on particular week.
+        Most of the classes Require rewrapping to provide a simple interface.
 
 First Month : 
-
   Week1 :
       * Support Iterators (Position,Posting,Term,Value)
       * Change all the function names which are to be exported to PascalCase.
