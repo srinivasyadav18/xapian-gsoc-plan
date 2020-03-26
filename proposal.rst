@@ -380,7 +380,7 @@ Plan :
 Community Bonding Period :
       * Implement the build system for bindings using the existing wrapper(for linux) and review it with the mentors.
       * Understand Xapian classes and wrappers in depth.
-      
+
 First Month : 
   June 1st-6th  :
       * Support Iterators (Position,Posting,Term,Value)
@@ -411,8 +411,9 @@ First Month :
       
       * Document EsetIterator,MsetIterator,ESet,MSet,RSet classes using godoc and reStructuredText.(2 days)
       
-      * Providing Automated tests for classes so far implemented.(2 days)
-   June 29th :
+      * Providing tests for classes so far implemented with go test package and edit Makefile for adding new tests.(2 days)
+   
+  June 29th :
       * Phase 1 Evaluation.
 
 Second Month :
@@ -528,3 +529,5 @@ References :
     Swig Insertion of Additional Go code into wrapper - http://www.swig.org/Doc4.0/Go.html#Go_adding_additional_code
 
     Cgo documentation - https://golang.org/cmd/cgo/
+
+    Go Testing package - https://golang.org/pkg/testing/
