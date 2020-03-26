@@ -402,7 +402,7 @@ First Month :
   June 8th-13th :
       * Rewrap the Database class for providing errors(as return values) to the functions that throw errors.(3 days)
       
-      * Rewrap the Document class for rewrapped iterators interfaces.(2 days)
+      * Rewrap the Document class for rewrapped iterator interfaces.(2 days)
       
       * Document both the classes.(1 day)
   June 15th-20th :
@@ -519,8 +519,7 @@ you plan to use, please give details.**
 .. to clearly identify that code (and keep existing licensing and copyright
 .. details intact), and to check with the mentors that it is OK to use.
 
-I am using the existing xapian-headers.i and xapian-head.i from xapian,
-apart from them I am not using any other.
+I am using the existing xapian-headers.i and xapian-head.i from xapian.
 
 References :
     Sample prototype for how rewrapping is done - https://github.com/srinivasyadav18/xapian-gsoc-plan
