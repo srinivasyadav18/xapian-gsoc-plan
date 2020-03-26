@@ -379,16 +379,16 @@ Plan :
 
       * In month April, First Two weeks - Understand go build system deeper and work on it if it can be integrated with libtool or 
         possibly prepare a plan to create a new separate build system with only auto tools.
-      * Next Two weeks - Understand Xapian implementation of existing bindings and Xapian classes deeper
+      * Next Two weeks - Understand Xapian implementation of existing bindings and Xapian classes more.
         (Im not quite familiar with classes related to latlong, MatchSpy, KeyMaker).
 
 Community Bonding Period :
       * Implement the build system properly for bindings in go using the existing wrapper(for linux) and review it with the mentors.
-      * Understand Xapian classes and wrappers in depth.
+      * Understand Xapian bindings for other implemented languages.
 
 First Month : 
   June 1st-6th  :
-      * Support Iterators (Position,Posting,Term,Value).
+      * Support Iterators (Position, Posting, Term, Value).
 
       * Change all the function names which are to be exported to PascalCase.(1 day)
 
@@ -408,7 +408,9 @@ First Month :
   June 15th-20th :
       * Rewrap the QueryParser , Query class for enums type conversions and provide return error for the methods for corresponding
         functions which throw exception in c++.(2 days)
+
       * Adding additional code for constructors and overloaded functions becuase of rewrapping.(2 days)
+      
       * Document these classes.(2 days)   
   June 22nd-27th :
       * Support EsetIterator , MsetIterator classes by rewrapping the swig generated interfaces and adding additional go code 
