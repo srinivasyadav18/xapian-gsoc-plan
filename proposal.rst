@@ -253,7 +253,7 @@ planned?**
 
 I am confident enough that the project would be implemented and completed properly on time.
 If in case some thing goes wrong , I would continue the work on go bindings after GSoC timeline as I am very much 
-interested in this project and love to contribute to xapian and woud like to maintain xapian go bindings if Im allowed to
+interested in this project and love to contribute to xapian and woud like to maintain xapian go bindings if Im allowed to.
 
 
 Project Timeline
@@ -341,13 +341,13 @@ Plan :
         Rewrap the go code(which does conversions before passing to the that particular function)
         in to wrapper for enums using swig %insert(go_wrapper).(https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/example.i#L51)
       
-      * Go does not support constructors but this can be done with an extra helper function that takes an slice of interfaces
+      * Go does not support constructors but this can be done with an extra helper function that takes slice of interfaces
         which swig does by default during the wrapping but this should be done explicitly when re-wrapped.
         interface{} in golang means any type. Slice of interfaces mean collection of interfaces(resizable array).
         Go supports variable number of arguments of different type to functions as func myfun(a ...interface{}) which is used during 
         constructor and function overloading.
          
-      * Go suppots Iterators by natural syntax using channels and convential methods such as Iter.Next().
+      * Go supports Iterators by natural syntax using channels and convential methods such as Iter.Next().
         
         1. Using channels one could use for-range construct.
 
