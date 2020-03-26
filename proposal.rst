@@ -369,7 +369,14 @@ Plan :
         that I work on particular week.
         Most of the classes Require rewrapping to provide a simple interface as SWIG generated 
         interfaces for most of the classes is not that simple to use.
+      
+      * In month April First Two weeks - Understand go build system deeper and work on it if it can be integrated with libtool or 
+        possibly prepare a plan to create a new separate build system with only auto tools.
+      * Next Two weeks - Understand Xapian implementation of existing bindings and Xapian classes deeper
+        (Im not quite familiar with classes related to latlong, MatchSpy, KeyMaker).
 
+Community Bonding Period :
+      * Implement the build system for complete wo
 First Month : 
   June 1st-6th  :
       * Support Iterators (Position,Posting,Term,Value)
