@@ -252,7 +252,7 @@ Compatiblilty of using libtool with the go build system.
 planned?**
 
 I am confident enough that the project would be implemented and completed properly on time.
-If in case some thing goes wrong , I would continue the work on go bindnigs after GSoC timeline as I am very much 
+If in case some thing goes wrong , I would continue the work on go bindings after GSoC timeline as I am very much 
 interested in this project and love to contribute to xapian and woud like to maintain xapian go bindings if Im allowed to
 
 
