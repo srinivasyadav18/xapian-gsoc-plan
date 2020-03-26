@@ -200,11 +200,11 @@ Motivations
 
 My main areas of interest includes C++ and Go.I like the thread support provided in  go and c++.
 As go achieves concurrency in two ways one using goroutines and other using channels . Go threads are often called 
-light-weight threads as they occupy very less stack compared to threads in c++ , java and more over many go threads can be multiplexed
+light-weight threads as they occupy very less stack space(8KB) compared to threads in c++(1-2MB) , java and more over many go threads can be multiplexed
 to one os thread where as pthreads occupy one OS thread that could be huge performance boost 
 when dealing with millions of go threads which are going to perform tiny tasks(go routines) 
-(here is an article on go threads vs java threads https://rcoh.me/posts/why-you-can-have-a-million-go-routines-but-only-1000-java-threads/)
-I have previously used cgo and swig in small projects(Implementing fourier transformations in go at c speed as 
+(here is an article on go threads vs java threads https://rcoh.me/posts/why-you-can-have-a-million-go-routines-but-only-1000-java-threads/).
+I have previously used cgo and swig in small projects(Implementing fourier transformations in GO at C speed as 
 fourier transformation is used heavly on larger data sets in machine learning).
 Docker and Kubernetes are the two famous projects written in golang and are widely used. So I would like to provide support for 
 xapian in Go.
@@ -252,8 +252,8 @@ planned?**
 
 I am confident enough that the project would be implemented and completed properly on time.
 If in case some thing goes wrong , I would continue the work on go bindnigs after GSoC timeline as I am very much 
-interested in this project and love to contribute to xapian and woud like to maintain xapian go bindings if Im allowed to.
-(Later after GSoC period)
+interested in this project and love to contribute to xapian and woud like to maintain xapian go bindings if Im allowed to
+
 
 Project Timeline
 ----------------
@@ -305,7 +305,7 @@ Project Timeline
 .. in your project timeline.
 In this summer I would like to do three things:
 
-    1.  Make the go bindings compatible with the xapian build system.
+    1.  Make the bindings in Go compatible with the Xapian build system.
 
     2.  Provide bindings in go and complete API reference (as it is provided for C++)
         using godoc,Go lang's official documentation tool where any one can look at the 
@@ -325,39 +325,40 @@ Plan :
         /*
         type Integer int
             
-        var a Integer =10
-        var b int = 20
+        var var_a Integer =10;
+        var var_b int = 20
 
-        func example(x int); */
+        func example(x int) */
 
-        This produces an error when a (variable) is passed to func.
+        This produces an error when  var_a is passed to func.
         Even though internally Integer is an int but both are different types.
         Code and error here (https://pastebin.com/bvz5QLZJ).
 
         The way swig wrapps the enums is not that natural and there should type conversions before passing to appropriate 
-        happening function for proper functioning. (https://pastebin.com/X8K1q9Rh)
+        function for proper functioning. (https://pastebin.com/X8K1q9Rh)
 
         Rewrap the go code(which does conversions before passing to the that particular function)
         in to wrapper for enums using swig %insert(go_wrapper).
       
-      * Go doesnt support constructors but this can be done using an extra helper function takes an slice of interfaces
-        which swig does by default during the wrapping but this should done explicitly when re-wrapped.
-        interface{} in golang means any type. slice of interfaces mean collection of interfaces quantity known at runtime(resizable array).
-        Go supports vardiable number of arguments of different type to functions as func myfun(a ...interface{}) which is used during 
+      * Go doesnt support constructors but this can be done using an extra helper that function takes an slice of interfaces
+        which swig does by default during the wrapping but this should be done explicitly when re-wrapped.
+        interface{} in golang means any type. Slice of interfaces mean collection of interfaces quantity known at runtime(resizable array).
+        Go supports variable number of arguments of different type to functions as func myfun(a ...interface{}) which is used during 
         constructor and function overloading.
-        (code for rewrapping and overloading )
          
       * Go suppots Iterators by natural syntax using channels and convential methods such as Iter.Next().
+        
         1. Using channels one could use for-range construct.
         for i := range container.Iter(){
           i.GetData() // methods to get information from the iterator at that position.
         }
         2. Using methods such as Iter.Next() as used in Go lang standard library (Container List https://golang.org/pkg/container/list/).
          
-        Both standard method /* for iter.Next(){ ... code } */ and /* for-range construct would be made available for user */
+        Both standard method /* for iter.Next(){ ... code } */ and /* for-range construct would be made available for user
+        (these are just like auto-ranged based loops in c++) */
          
         Go support multiple return values , therefore rewrapping the interfaces which return iterators to return both 
-        begin and end iterators in call as below.
+        begin and end iterators in function call as below.
         /* start,end := doc.Termlist() */ 
 
       * Go supports errors as return values . A language like c++ have try catch block Go has three constructs for dealing
