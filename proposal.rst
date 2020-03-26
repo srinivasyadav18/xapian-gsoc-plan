@@ -427,9 +427,9 @@ Second Month :
   July 29th-4th :
       * Rewrap the Enquire class and all the overloaded functions,constructors(2 days) and
         functions which return the iterators to the interface which will be provided in go  
-        with multiple return values at once.(2 days)
+        with multiple return values at once(two iterators).(2 days)
       
-      * Document Enquire class and small code examples (2 days).
+      * Document Enquire class and provide small code examples (2 days).
   July 6th-11th :
       * Rewrap the Stem class and Writable Database class and provide errors as return values for the functions which throw.(3 days)
       
@@ -466,7 +466,7 @@ Third Month :
       
       * Provide the standard examples in docs (simple index, simple search).(3 days)
   August 17th-22nd :
-      * implementation of go get feature (3 days)
+      * Implementation of go get feature.(3 days)
       
       * Providing tests far classes implementend so far with go test(package) and edit the Makefile for adding new tests 
         and provide tests for go get.(3 days)
