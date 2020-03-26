@@ -227,13 +227,14 @@ Project Details
 
 I have done some intial implementation of go bindings from the existing swig base wrappers written (in /xapian/xapian-bindings)
 which are available in my git repository.
+I have a small prototype on how re-wrapping is done in github repo mentioned at the bottom.
 
 
 **Do you have any preliminary findings or results which suggest that your
 approach is possible and likely to succeed?**
 
 Yes, my intial work on bindings definitly show that bindings can be implementend in go with c++ shared libraries.
-For time being they are working on Linux and Unix systems. I consider expanding them to work on other platforms is not a difficult job. 
+For time being they are working on Linux systems. I would expand them to work properly on all the linux systems.
 
 **What other approaches have you considered, and why did you reject those in
 favour of your chosen approach?**
@@ -245,7 +246,7 @@ pkg-config , later I started using flags from configure as one of my mentor (oll
 **Please note any uncertainties or aspects which depend on further research or
 investigation.**
 
-I need to have a closer look at iterator classes of xapian for Implementing bindings in go.
+Compatiblilty of using libtool with the go build system.
 
 **How useful will your results be when not everything works out exactly as
 planned?**
