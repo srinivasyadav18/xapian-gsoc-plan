@@ -419,21 +419,25 @@ Second Month :
       
       * Document Enquire class and small code examples (2 days).
   July 6th-11th :
-      * Rewrap the Stem class and Writable Database class and provide errors as return values for the functions which throw.
+      * Rewrap the Stem class and Writable Database class and provide errors as return values for the functions which throw.(3 days)
       
-      * Document both the classes.
+      * Code for constructors and overloaded functions becuase of rewrapping.(2 days)
+      
+      * Document both the classes.(1 day)
   July 13th-18th :
-      * Rewrap the TermGenerator class and provide the conversions for enum.
+      * Rewrap the TermGenerator class and provide the conversions for enum.(3 days)
       
-      * Document the TermGenerator class.
+      * Code for constructors and overloaded functions becuase of rewrapping.(2 days)
+
+      * Document the TermGenerator class.(1 day)
   July 20th-25th:
-      * Support Range Processors and Field Processors.
+      * Support Range Processors and Field Processors.(2 days)
       
-      * Document both the Classes and demonstrate the usage of derived classes.
+      * Document both the Classes and demonstrate the usage of derived classes.(2 days)
       
-      * Review the work done so far and fix the bugs if any.
+      * Review the work done so far and fix the bugs if any.(1 day)
       
-      * Provide automated tests far classes implementend so far. 
+      * Provide automated tests far classes implementend so far. (1 day)
   July 27th:
       * Phase 2 Evaluation.
 
