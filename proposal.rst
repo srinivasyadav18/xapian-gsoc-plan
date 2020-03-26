@@ -394,7 +394,7 @@ First Month :
         functions which throw exception in c++.
       
       * Document these classes.   
-  June 22nd-27th:
+  June 22nd-27th :
       * Support EsetIterator , MsetIterator classes by rewrapping the swig generated interfaces and adding additional go code 
         for iteration.
       
