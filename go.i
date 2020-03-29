@@ -27,20 +27,17 @@
 
 %ignore Xapian::Compactor::resolve_duplicate_metadata(std::string const &key, size_t num_tags, std::string const tags[]);
 
-%include ../xapian-head.i
-
-//%include ../generic/except.i
-%include ../xapian-headers.i
-
+// Document class rewrapping for Iterators
+%rename (Wrapped_Document) Document;
 %insert(go_wrapper) %{
     
 //rewrapping the Document interface currently adding only extra method Terms() to show how term iterator can be 
 //used with go for-range construct
-type MyDocument struct {
-        Obj Document
+type Document struct {
+        Obj Wrapped_Document
 }
 
-func (d *MyDocument) Terms()<-chan string {
+func (d *Document) Terms()<-chan string {
         ch := make(chan string)
         begin := d.Obj.Termlist_begin()
         end := d.Obj.Termlist_end()
@@ -53,5 +50,39 @@ func (d *MyDocument) Terms()<-chan string {
         }()
         return ch
 }
+%}
 
+%exception {
+        try {
+                $action;
+        } catch (Xapian::DatabaseOpeningError & e){
+                //calls the panic in go
+                _swig_gopanic(e.get_error_string());
+        }
+        catch (std::exception & e){
+                _swig_gopanic(e.what());
+        }
 }
+
+//Example for Error handling for database class
+%rename (Wrapped_Database) Database;
+%go_import("fmt")
+%insert (go_wrapper) %{
+    type Database struct {
+            Obj Wrapped_Database
+    }
+    func NewDatabase(a ...interface{}) (db Database,err error){
+            defer catch(&err)
+            db.Obj = NewWrapped_Database(a...)
+            return
+    }
+
+    func catch(err *error){
+            if r := recover(); r != nil {
+            *err = fmt.Errorf("error %v",r)
+            }
+    }
+%}
+
+%include ../xapian-head.i
+%include ../xapian-headers.i
