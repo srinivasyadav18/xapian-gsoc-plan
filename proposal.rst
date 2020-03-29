@@ -342,7 +342,8 @@ Plan :
         in to wrapper for enums using swig %insert(go_wrapper).(https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/example.i#L51)
       
       * Go does not support constructors but this can be done with an extra helper function that takes slice of interfaces
-        which swig does by default during the wrapping but this should be done explicitly when re-wrapped.
+        which swig does by default during the wrapping, but little extra code need to be added for constructors and
+        functions when overloaded as they take slice of interfaces in ellipse syntax.
         interface{} in golang means any type. Slice of interfaces mean collection of interfaces(resizable array).
         Go supports variable number of arguments of different type to functions as func myfun(a ...interface{}) which is used during 
         constructor and function overloading.
@@ -351,10 +352,10 @@ Plan :
         
         1. Using channels one could use for-range construct.
 
-        for i := range container.Iter(){
-          i.GetData() // methods to get information from the iterator at that position.
+        for i := range doc.terms(){
+          i.GetTerm() // methods to get term from the iterator at that position.
         }
-
+	(sample code how channels are used for iteration with for-range construct https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/go.i#L43)
         2. Using methods such as Iter.Next() as used in Go lang standard library (Container List https://golang.org/pkg/container/list/).
          
         Both standard method /* for iter.Next(){ ... code } */ and /* for-range construct would be made available for user
@@ -362,7 +363,7 @@ Plan :
          
         Go support multiple return values , therefore rewrapping the interfaces which return iterators to both 
         begin and end iterators in one function call as below.
-        /* start,end := doc.Termlist() */ 
+        /* begin,end := doc.Terms() */ 
 
       * Go supports errors as return values . A language like c++ have try catch block Go has three constructs for dealing
         with exceptions, they are panic defer and recover.A Panic is similar to an exception which can occur an runtime exception.
@@ -377,13 +378,17 @@ Plan :
       * Go has its own test package for testing the packages which would be put in Makefile.
         (https://golang.org/pkg/testing/)
 
+      * summary and code for each part in https://github.com/srinivasyadav18/xapian-gsoc-plan
+
       * In month April, First Two weeks - Understand go build system deeper and work on it if it can be integrated with libtool or 
         possibly prepare a plan to create a new separate build system with only auto tools.
+      
       * Next Two weeks - Understand Xapian implementation of existing bindings and Xapian classes more.
         (Im not quite familiar with classes related to latlong, MatchSpy, KeyMaker).
 
 Community Bonding Period :
       * Implement the build system properly for bindings in go using the existing wrapper(for linux) and review it with the mentors.
+      
       * Understand Xapian bindings for other implemented languages.
 
 First Month : 
@@ -409,7 +414,7 @@ First Month :
       * Rewrap the QueryParser , Query class for enums type conversions and provide return error for the methods for corresponding
         functions which throw exception in c++.(2 days)
 
-      * Adding additional code for constructors and overloaded functions becuase of rewrapping.(2 days)
+      * Adding additional code for constructors and overloaded functions becuase of rewrapping, rewrap the functions which return iterators in Go idomatic way.(2 days)
       
       * Document these classes.(2 days)   
   June 22nd-27th :
@@ -424,7 +429,7 @@ First Month :
       * Phase 1 Evaluation.
 
 Second Month :
-  July 29th-4th :
+  June 29th - July 4th :
       * Rewrap the Enquire class and all the overloaded functions,constructors(2 days) and
         functions which return the iterators to the interface which will be provided in go  
         with multiple return values at once(two iterators).(2 days)
@@ -528,6 +533,8 @@ References :
 
     Iterator Pattern (for-range) - http://www.golangpatterns.info/object-oriented/iterators
 
+    Iterator using channels - https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/channel.go#L35
+
     Errors in Golang - https://blog.golang.org/error-handling-and-go
 
     Swig Support for Golang - http://www.swig.org/Doc4.0/Go.html
@@ -539,3 +546,4 @@ References :
     Go Testing package - https://golang.org/pkg/testing/
 
     Go doc tool - https://blog.golang.org/godoc
+    
