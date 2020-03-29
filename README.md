@@ -2,7 +2,7 @@
 
 Summary :
 
-The following work is done on the classes which are beign rewrapped to provide more natural Go API.
+The following work is done on the classes which are being rewrapped to provide more natural Go API.
 
 * Provide usage of for-range construct for Iterators.
 
