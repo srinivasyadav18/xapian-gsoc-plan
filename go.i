@@ -28,6 +28,7 @@
 %ignore Xapian::Compactor::resolve_duplicate_metadata(std::string const &key, size_t num_tags, std::string const tags[]);
 
 // Document class rewrapping for Iterators
+
 %rename (Wrapped_Document) Document;
 %insert(go_wrapper) %{
     
@@ -68,9 +69,11 @@ func (d *Document) Terms()<-chan string {
 %rename (Wrapped_Database) Database;
 %go_import("fmt")
 %insert (go_wrapper) %{
+
     type Database struct {
             Obj Wrapped_Database
     }
+
     func NewDatabase(a ...interface{}) (db Database,err error){
             defer catch(&err)
             db.Obj = NewWrapped_Database(a...)
