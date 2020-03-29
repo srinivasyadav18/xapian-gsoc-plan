@@ -26,21 +26,16 @@
 %rename(Apply) operator();
 
 %ignore Xapian::Compactor::resolve_duplicate_metadata(std::string const &key, size_t num_tags, std::string const tags[]);
-
-%include ../xapian-head.i
-
-//%include ../generic/except.i
-%include ../xapian-headers.i
-
+%rename (Wrapped_Document) Document;
 %insert(go_wrapper) %{
     
 //rewrapping the Document interface currently adding only extra method Terms() to show how term iterator can be 
 //used with go for-range construct
-type MyDocument struct {
-        Obj Document
+type Document struct {
+        Obj Wrapped_Document
 }
 
-func (d *MyDocument) Terms()<-chan string {
+func (d *Document) Terms()<-chan string {
         ch := make(chan string)
         begin := d.Obj.Termlist_begin()
         end := d.Obj.Termlist_end()
@@ -54,4 +49,8 @@ func (d *MyDocument) Terms()<-chan string {
         return ch
 }
 
-}
+%}
+%include ../xapian-head.i
+
+//%include ../generic/except.i
+%include ../xapian-headers.i
