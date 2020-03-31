@@ -198,8 +198,8 @@ Motivations
 
 **Why have you chosen this particular project?**
 
-My main areas of interest includes C++ and Go.I like the thread support provided in  go and c++.
-As go achieves concurrency in two ways one using goroutines and other using channels . goroutines are often called 
+My main areas of interest includes C++ and Go.I like the thread support provided in  Go and C++.
+As go achieves concurrency in two ways one using goroutines and other using channels . Goroutines are often called 
 light-weight threads as they occupy very less stack space(8KB) compared to posix threads(1-2MB) and more over many go threads can be multiplexed
 to one os thread where as pthreads occupy one OS thread that could be huge performance boost 
 when dealing with millions of go threads which are going to perform tiny tasks(go routines) 
@@ -227,14 +227,12 @@ Project Details
 
 I have done some intial implementation of go bindings from the existing swig base wrappers written (in /xapian/xapian-bindings)
 which are available in my git repository.
-I have a small prototype on how re-wrapping is done in github repo mentioned at the bottom.
 
 
 **Do you have any preliminary findings or results which suggest that your
 approach is possible and likely to succeed?**
 
-Yes, my intial work on bindings definitly show that bindings can be implementend in go with c++ shared libraries.
-For time being they are working on Linux systems. I would expand them to work properly on all the linux systems.
+Yes, my intial work on bindings definitly show that bindings can be implementend in Go with c++ shared libraries.
 
 **What other approaches have you considered, and why did you reject those in
 favour of your chosen approach?**
@@ -246,7 +244,7 @@ pkg-config , later I started using flags from configure as one of my mentor (oll
 **Please note any uncertainties or aspects which depend on further research or
 investigation.**
 
-Compatiblilty of using libtool with the go build system.
+Compatiblilty of libtool with the go build system.
 
 **How useful will your results be when not everything works out exactly as
 planned?**
@@ -349,12 +347,7 @@ Plan :
         Error :
             cannot use x (type int) as type Integer in argument to example
 
-        When swig wraps enums of a particular class , 
-        For example during wrapping of stem_strategy enum in TermGenerator class swig generates  
-        a type for enum (xapian.XapianTermGeneratorStem_strategy) and defines variables for the  elements of that particular enum
-        (such as TermGeneratorSTEM_NONE,TermGeneratorSTEM_SOME of type int).
-        So since each variable of int type , TermGeneratorSTEM_NONE(of type int) should be converted to XapianTermGeneratorStem_strategy type
-        before passing to function which needs the element an enum as an argument.
+        When swig wraps enums of a particular class ,for example during wrapping of stem_strategy enum in TermGenerator class swig generates a type for enum (xapian.XapianTermGeneratorStem_strategy) and defines variables for the  elements of that particular enum(such as TermGeneratorSTEM_NONE,TermGeneratorSTEM_SOME of type int).So since each variable of int type , TermGeneratorSTEM_NONE(of type int) should be converted to XapianTermGeneratorStem_strategy type before passing to function which needs the element an enum as an argument.
             
             
         Swig generated code :
@@ -371,7 +364,8 @@ Plan :
             tm := xapian.NewTermGenerator()
 
             // tm.Set_stemming_strategy(xapian.TermGeneratorSTEM_NONE) --> fails
-          
+            // an explicit type conversion is required . So Providing automatic conversoin would be simpler for user
+
             tm.Set_stemming_strategy(xapian.XapianTermGeneratorStem_strategy(xapian.TermGeneratorSTEM_SOME))
 
             }
@@ -379,7 +373,7 @@ Plan :
         Output when failed :
             
             /root/xapian-enum.go:8:26:
-
+      
             cannot use xapian.TermGeneratorSTEM_NONE (type int) as type xapian.XapianTermGeneratorStem_strategy in argument to tm.Set_stemming_strategy
 
       * Go supports constants which can be defined with const keyword.
@@ -390,7 +384,7 @@ Plan :
 
             var DB_CREATE_OR_OPEN int = _swig_getDB_CREATE_OR_OPEN()
         
-        DB_CREATE_OR_OPEN is a constant in c++ but this is being wrapped as a variable.So all the constants need proper wrapping to get wrapped as 
+        DB_CREATE_OR_OPEN is a constant in c++ but this is being wrapped as a variable.So all the constants need proper wrapping such as 
             
             const DB_CREATE_OR_OPEN = 0
          
@@ -423,39 +417,38 @@ Plan :
 
           //used with go for-range construct
 
-                type Document struct {
+          type Document struct {
 
-                        Obj Wrapped_Document
+                Obj Wrapped_Document
 
-                }
+           }
 
-                func (d *Document) Terms()<-chan TermItertor {
+           func (d *Document) Terms()<-chan TermItertor {
 
-                        ch := make(chan string)
+           ch := make(chan string)
 
-                        begin := d.Obj.Termlist_begin()
+           begin := d.Obj.Termlist_begin()
                         
-                        end := d.Obj.Termlist_end()
+           end := d.Obj.Termlist_end()
 
-                        go func() {
+           go func() {
 
-                                for !begin.Equals(end) {
+             for !begin.Equals(end) {
 
-                                        ch <- begin
+               ch <- begin
 
-                                        begin.Next()
+               begin.Next()
 
-                                }
+             }
 
-                                close(ch)
+             close(ch)
 
-                        }()
+           }()
 
-                        return ch
+           return ch
+           }
 
-                        }
-
-            %}
+          %}
 
               
             Usage : 
@@ -482,22 +475,23 @@ Plan :
 
 
             %exception {
+     
+            try {
 
-              try {
+            $action;
 
-                      $action;
+            } catch (Xapian::DatabaseOpeningError & e){
 
-              } catch (Xapian::DatabaseOpeningError & e){
+              //calls the panic in go
 
-                      //calls the panic in go
+              _swig_gopanic(e.get_error_string());
 
-                      _swig_gopanic(e.get_error_string());
+            }
+            catch (std::exception & e){
 
-              }
-              catch (std::exception & e){
-
-                      _swig_gopanic(e.what());
-              }
+              _swig_gopanic(e.what());
+   
+            }
 
             }
 
@@ -561,11 +555,7 @@ Plan :
         functions when overloaded as they take slice of interfaces in ellipse syntax.
         interface{} in golang means any type. Slice of interfaces mean collection of interfaces(resizable array).
         Go supports variable number of arguments of different type to functions as func myfun(a ...interface{}) which is used during 
-        constructor and function overloading.
-        
-
-        */
-
+        constructor and function overloading.The word rewrapping is used often a lot, this means wrapping the swig generated object inside a go struct with additional methods and for cutomisation to provide more Natural Go API as described in SWIG Go Documentation.This is one of key features SWIG provides for cutomising and adding additional code.         
 
       * Go has its own documentation tool for generating documentation for the go code . Providing documentation for the classes each week
         that I work on particular week.
@@ -576,6 +566,7 @@ Plan :
         (https://golang.org/pkg/testing/)
 
       * In month April :
+        
         * Understand the exceptions in other bindings which are auto-generated.
 
         * Understand go build system deeper and work on it if it can be integrated with libtool or 
@@ -668,13 +659,13 @@ Third Month :
       * Document for usage of Exapand Decider and its derived classes.(2 days)
   August 10th-15th :
       * Since erros are values and they would be returned to the respective function so far,
-        now provide all the errors except.i file.(3 days)
+        now code fore generating exceptions automatically.(3 days)
       
       * Provide the standard examples in docs (simple index, simple search).(3 days)
   August 17th-22nd :
       * Implementation of go get feature.(3 days)
       
-      * Providing tests far classes implementend so far with go test(package) and edit the Makefile for adding new tests 
+      * Providing tests for classes implementend so far with go test(package) and edit the Makefile for adding new tests 
         and provide tests for go get.(3 days)
   August 24th-31st : Final Week.
       * Evaluation Week and submission.
@@ -739,7 +730,6 @@ you plan to use, please give details.**
 I am using the existing xapian-headers.i and xapian-head.i from xapian.
 
 References :
-    Sample prototype for how rewrapping is done - https://github.com/srinivasyadav18/xapian-gsoc-plan
 
     Iterator Pattern used in Golang Standard library - https://golang.org/pkg/container/list/
 
