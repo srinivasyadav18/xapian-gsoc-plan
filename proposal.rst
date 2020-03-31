@@ -341,13 +341,16 @@ Plan :
         (such as TermGeneratorSTEM_NONE,TermGeneratorSTEM_SOME of type int).
         So since each variable of one type , TermGeneratorSTEM_NONE(of type int) should be converted to XapianTermGeneratorStem_strategy type
         before passing to function which needs the element an enum as an argument.
-        swig generated code :
+            
+            
+            swig generated code :
 
             type XapianTermGeneratorStem_strategy int
 
             var TermGeneratorSTEM_NONE int = _swig_getTermGenerator_STEM_NONE_TermGenerator()
             var TermGeneratorSTEM_SOME int = _swig_getTermGenerator_STEM_SOME_TermGenerator()
 
+            Error and Insertion of code for type conversion : 
             func main(){
 
             tm := xapian.NewTermGenerator()
@@ -373,7 +376,8 @@ Plan :
 
             }
  
-        OUTPUT(WHEN FAILED) :
+            OUTPUT(WHEN FAILED) :
+            
             /root/xapian-enum.go:8:26:
 
             cannot use xapian.TermGeneratorSTEM_NONE (type int) as type xapian.XapianTermGeneratorStem_strategy in argument to tm.Set_stemming_strategy
