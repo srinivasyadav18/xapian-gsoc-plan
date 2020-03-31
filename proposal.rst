@@ -392,6 +392,7 @@ Plan :
             var DB_CREATE_OR_OPEN int = _swig_getDB_CREATE_OR_OPEN()
         
         DB_CREATE_OR_OPEN is a constant in c++ but this is being wrapped as a variable.So all the constants need proper wrapping to get wrapped as 
+            
             const DB_CREATE_OR_OPEN = 0
         
       * Go does not support constructors but this can be done with an extra helper function that takes slice of interfaces
