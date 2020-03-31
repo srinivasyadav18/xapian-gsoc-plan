@@ -253,7 +253,9 @@ planned?**
 
 I am confident enough that the project would be implemented and completed properly on time.
 If in case some thing goes wrong , I would continue the work on go bindings after GSoC timeline as I am very much 
-interested in this project and love to contribute to xapian and woud like to maintain xapian go bindings if Im allowed to.
+interested in this project and love to contribute to xapian and would like to maintain xapian go bindings if I am allowed to.
+After GSoC I would like to take up Java Bindngs Improvements and Python Bindings Improvements If none has take up those projects in 
+GSoC. 
 
 
 Project Timeline
@@ -323,17 +325,29 @@ Plan :
       * Go is Statically-typed language and each variable can only be of one type.
         
         Example :
-        /*
-        type Integer int
-            
-        var VarA Integer =10;
-        var VarB int = 20
+        
+            type Integer int
 
-        func example(x int) */
+            func example(x Integer){
+
+              fmt.Println(x)
+
+            }
+
+            func main(){
+
+              var VarA Integer =10;
+
+              var VarB int = 20
+
+              example(VarB)
+
+            } 
 
         This produces an error when  VarA is passed to func.
-        Even though internally Integer is an int but both are different types.
-        Code and error here (https://pastebin.com/bvz5QLZJ).
+
+        Error :
+            cannot use x (type int) as type Integer in argument to example
 
         When swig wraps enums of a particular class , 
         For example during wrapping of stem_strategy enum in TermGenerator class swig generates  
@@ -357,23 +371,8 @@ Plan :
             tm := xapian.NewTermGenerator()
 
             // tm.Set_stemming_strategy(xapian.TermGeneratorSTEM_NONE) --> fails
-
-    
-            // for Stem Startegy enum in TermGenerator class
-
-            // swig defines a type XapianTermGeneratorStem_strategy int
-
-            // and for each element in  enum a type is created as
-
-            // type TermGeneratorSTEM_SOME int.
-
-            // so before passing to the function converion should happen
-
-            // even though both hold the same internal type.
           
             tm.Set_stemming_strategy(xapian.XapianTermGeneratorStem_strategy(xapian.TermGeneratorSTEM_SOME))
-
-            fmt.Println(tm)
 
             }
  
@@ -385,7 +384,7 @@ Plan :
 
       * Go supports constants which can be defined with const keyword.
         Swig wrapps all the #define macros and constants declared in %constant directive as Go constants (const).
-        But the constants which are defined using %constant directive during xapian-headers.i is being wrapped as variables.
+        But the constants which are defined using %constant directive in xapian-headers.i are being wrapped as variables.
 
         Swig generated code :
 
@@ -401,6 +400,8 @@ Plan :
 
             for i := range doc.terms(){
               i.GetTerm() // methods to get term from the iterator at that position.
+            
+            }
             
         2. Using methods such as Iter.Next() as used in Go lang standard library (Container List https://golang.org/pkg/container/list/).
          
@@ -468,11 +469,12 @@ Plan :
 
             
 
-      * Go supports errors as return values . A language like c++ have try catch block Go has three constructs for dealing
+      * Go supports errors as return values . A language like c++ have try catch block Go has three similar constructs for dealing
         with exceptions, they are panic defer and recover.A Panic is similar to an exception which can occur an runtime exception.
-        C++ exceptions can be handled in go from swig wrappers as follows(https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/example.i#L16).
+        C++ exceptions can be handled in go from swig wrappers as shown below.
         Which ever class function throws an exception in c++ , the wrapped function in Go returns the error as value.
-        Way errors are handled in OS package of Go standard library - https://golang.org/pkg/os/
+        Providing error in same pattern as provided in standard libraries of Go lang.
+        Example Os package error handling - https://golang.org/pkg/os/
         /*
 
          
@@ -573,13 +575,9 @@ Plan :
       * Go has its own test package for testing the packages which would be put in Makefile.
         (https://golang.org/pkg/testing/)
 
-      * Summary and code for each part in https://github.com/srinivasyadav18/xapian-gsoc-plan
-
       * In month April :
+        * Understand the exceptions in other bindings which are auto-generated.
 
-        * Swig does not provide natural Go API , so most the classes need rewrapping ,
-          so work on implementation of automated script to generate rewrapped interfaces as show above.
-        
         * Understand go build system deeper and work on it if it can be integrated with libtool or 
           possibly prepare a plan to create a new separate build system with only auto tools.
       
@@ -587,8 +585,6 @@ Plan :
           (Im not quite familiar with classes related to latlong, MatchSpy, KeyMaker).
 
 Community Bonding Period :
-
-      * Work on implementation of automated script to generate rewrapped interfaces.
 
       * Implement the build system properly for bindings in go using the existing wrapper(for linux) and review it with the mentors.
       
@@ -598,6 +594,8 @@ First Month :
   June 1st-6th  :
       * Support Iterators (Position, Posting, Term, Value).
 
+      * Wrapping c++ constants as natural Go constants.
+      
       * Change all the function names which are to be exported to PascalCase.(1 day)
 
         (Go uses Pascal Case when exporting functions from a package and camelCase for unexported functions.)
