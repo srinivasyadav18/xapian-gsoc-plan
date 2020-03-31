@@ -335,6 +335,50 @@ Plan :
         Even though internally Integer is an int but both are different types.
         Code and error here (https://pastebin.com/bvz5QLZJ).
 
+        When swig wraps enums of a particular class , 
+        For example during wrapping of stem_strategy enum in TermGenerator class swig generates  
+        a type for enum (xapian.XapianTermGeneratorStem_strategy) and defines variables for the  elements of that particular enum
+        (such as TermGeneratorSTEM_NONE,TermGeneratorSTEM_SOME of type int).
+        So since each variable of one type , TermGeneratorSTEM_NONE(of type int) should be converted to XapianTermGeneratorStem_strategy type
+        before passing to function which needs the element an enum as an argument.
+        swig generated code :
+
+            type XapianTermGeneratorStem_strategy int
+
+            var TermGeneratorSTEM_NONE int = _swig_getTermGenerator_STEM_NONE_TermGenerator()
+            var TermGeneratorSTEM_SOME int = _swig_getTermGenerator_STEM_SOME_TermGenerator()
+
+            func main(){
+
+            tm := xapian.NewTermGenerator()
+
+            // tm.Set_stemming_strategy(xapian.TermGeneratorSTEM_NONE) --> fails
+
+    
+            // for Stem Startegy enum in TermGenerator class
+
+            // swig defines a type XapianTermGeneratorStem_strategy int
+
+            // and for each element in  enum a type is created as
+
+            // type TermGeneratorSTEM_SOME int.
+
+            // so before passing to the function converion should happen
+
+            // even though both hold the same internal type.
+          
+            tm.Set_stemming_strategy(xapian.XapianTermGeneratorStem_strategy(xapian.TermGeneratorSTEM_SOME))
+
+            fmt.Println(tm)
+
+            }
+ 
+        OUTPUT(WHEN FAILED) :
+            /root/xapian-enum.go:8:26:
+
+            cannot use xapian.TermGeneratorSTEM_NONE (type int) as type xapian.XapianTermGeneratorStem_strategy in argument to tm.Set_stemming_strategy
+
+
         The way swig wraps the enums is not that natural and there should type conversions before passing to appropriate 
         function for proper functioning. (https://pastebin.com/X8K1q9Rh)
 
@@ -355,7 +399,9 @@ Plan :
         for i := range doc.terms(){
           i.GetTerm() // methods to get term from the iterator at that position.
         }
-	(sample code how channels are used for iteration with for-range construct https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/go.i#L43)
+	      (sample code how channels are used for iteration with for-range construct 
+        https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/go.i#L43
+        https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/main.go#L31)
         2. Using methods such as Iter.Next() as used in Go lang standard library (Container List https://golang.org/pkg/container/list/).
          
         Both standard method /* for iter.Next(){ ... code } */ and /* for-range construct would be made available for user
@@ -365,10 +411,153 @@ Plan :
         begin and end iterators in one function call as below.
         /* begin,end := doc.Terms() */ 
 
+        code : 
+
+
+          %rename (Wrapped_Document) Document;
+
+          %insert(go_wrapper) %{
+      
+          //rewrapping the Document interface currently adding only extra method Terms() to show how term iterator can be 
+
+          //used with go for-range construct
+
+                type Document struct {
+
+                        Obj Wrapped_Document
+
+                }
+
+                func (d *Document) Terms()<-chan string {
+
+                        ch := make(chan string)
+
+                        begin := d.Obj.Termlist_begin()
+                        
+                        end := d.Obj.Termlist_end()
+
+                        go func() {
+
+                                for !begin.Equals(end) {
+
+                                        ch <- begin.Get_term()
+
+                                        begin.Next()
+
+                                }
+
+                                close(ch)
+
+                        }()
+
+                        return ch
+
+                        }
+
+            %}
+
+            */    
+            Usage in main.go 
+            /*
+
+            for term := range myDoc.Terms() {
+
+                fmt.Println(term)
+
+            }
+
+            */
+
       * Go supports errors as return values . A language like c++ have try catch block Go has three constructs for dealing
         with exceptions, they are panic defer and recover.A Panic is similar to an exception which can occur an runtime exception.
         C++ exceptions can be handled in go from swig wrappers as follows(https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/example.i#L16).
         Which ever class function throws an exception in c++ , the wrapped function in Go returns the error as value.
+        Database error handling - https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/go.i#L77
+        https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/main.go#L36
+        error (pastebin) - https://pastebin.com/AuFpiRdQ
+        Way errors are handled in OS package of Go standard library - https://golang.org/pkg/os/
+        /*
+
+        code : 
+
+            %exception {
+
+              try {
+
+                      $action;
+
+              } catch (Xapian::DatabaseOpeningError & e){
+
+                      //calls the panic in go
+
+                      _swig_gopanic(e.get_error_string());
+
+              }
+              catch (std::exception & e){
+
+                      _swig_gopanic(e.what());
+              }
+
+            }
+
+            //Example for Error handling for database class
+
+            %rename (Wrapped_Database) Database;
+
+            %go_import("fmt")
+
+            %insert (go_wrapper) %{
+
+                type Database struct {
+
+                        Obj Wrapped_Database
+
+                }
+
+                func NewDatabase(a ...interface{}) (db Database,err error){
+
+                        defer catch(&err)
+
+                        db.Obj = NewWrapped_Database(a...)
+
+                        return
+
+                }
+
+                func catch(err *error){
+
+                        if r := recover(); r != nil {
+
+                        *err = fmt.Errorf("error %v",r)
+
+                        }
+
+                }
+
+            %}
+
+
+            //usage in main.go 
+
+            db, err := xp.NewDatabase("/no_database")
+
+            if err != nil {
+
+              fmt.Println(err)
+
+              os.Exit(2)
+
+            }
+
+        OUTPUT:
+
+        error No such file or directory
+
+        exit status 2
+        
+
+        */
+
 
       * Go has its own documentation tool for generating documentation for the go code . Providing documentation for the classes each week
         that I work on particular week.
@@ -380,13 +569,21 @@ Plan :
 
       * Summary and code for each part in https://github.com/srinivasyadav18/xapian-gsoc-plan
 
-      * In month April, First Two weeks - Understand go build system deeper and work on it if it can be integrated with libtool or 
-        possibly prepare a plan to create a new separate build system with only auto tools.
+      * In month April :
+
+        * Swig does not provide natural Go API , so most the classes need rewrapping ,
+          so work on implementation of automated script to generate rewrapped interfaces as show above.
+        
+        * Understand go build system deeper and work on it if it can be integrated with libtool or 
+          possibly prepare a plan to create a new separate build system with only auto tools.
       
-      * Next Two weeks - Understand Xapian implementation of existing bindings and Xapian classes more.
-        (Im not quite familiar with classes related to latlong, MatchSpy, KeyMaker).
+        * Next Two weeks - Understand Xapian implementation of existing bindings and Xapian classes more.
+          (Im not quite familiar with classes related to latlong, MatchSpy, KeyMaker).
 
 Community Bonding Period :
+
+      * Work on implementation of automated script to generate rewrapped interfaces.
+
       * Implement the build system properly for bindings in go using the existing wrapper(for linux) and review it with the mentors.
       
       * Understand Xapian bindings for other implemented languages.
@@ -478,7 +675,15 @@ Third Month :
   August 24th-31st : Final Week.
       * Evaluation Week and submission.
 
+Stretch Goals:
+      * If time permits support for Stem Implementation , Stopper class , Weight class.
+      
+      * Provide benchmarking tests in Go (with help of go test package).
+      
+      * Research on Providing bindings in Rust.
+      
 Project Deliverable:
+
       * A well documented Xapian bindings in Go with automated tests, examples and go get command
         for installation of bindings in Go. 
 
