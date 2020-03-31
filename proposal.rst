@@ -394,13 +394,6 @@ Plan :
         DB_CREATE_OR_OPEN is a constant in c++ but this is being wrapped as a variable.So all the constants need proper wrapping to get wrapped as 
             
             const DB_CREATE_OR_OPEN = 0
-        
-      * Go does not support constructors but this can be done with an extra helper function that takes slice of interfaces
-        which swig does by default during the wrapping, but little extra code need to be added for constructors and
-        functions when overloaded as they take slice of interfaces in ellipse syntax.
-        interface{} in golang means any type. Slice of interfaces mean collection of interfaces(resizable array).
-        Go supports variable number of arguments of different type to functions as func myfun(a ...interface{}) which is used during 
-        constructor and function overloading.
          
       * Go supports Iterators by natural syntax using channels and convential methods such as Iter.Next().
         
@@ -488,7 +481,9 @@ Plan :
         Way errors are handled in OS package of Go standard library - https://golang.org/pkg/os/
         /*
 
-        code : 
+         
+        Code for exceptions : 
+
 
             %exception {
 
@@ -546,8 +541,7 @@ Plan :
 
             %}
 
-
-            //usage in main.go 
+        Usage : 
 
             db, err := xp.NewDatabase("/no_database")
 
@@ -561,9 +555,17 @@ Plan :
 
         OUTPUT:
 
-        error No such file or directory
+          error No such file or directory
 
-        exit status 2
+          exit status 2
+
+
+      * Go does not support constructors but this can be done with an extra helper function that takes slice of interfaces
+        which swig does by default during the wrapping, but little extra code need to be added for constructors and
+        functions when overloaded as they take slice of interfaces in ellipse syntax.
+        interface{} in golang means any type. Slice of interfaces mean collection of interfaces(resizable array).
+        Go supports variable number of arguments of different type to functions as func myfun(a ...interface{}) which is used during 
+        constructor and function overloading.
         
 
         */
