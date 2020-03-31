@@ -406,9 +406,9 @@ Plan :
         
         1. Using channels one could use for-range construct.
 
-        for i := range doc.terms(){
-          i.GetTerm() // methods to get term from the iterator at that position.
-        }
+            for i := range doc.terms(){
+              i.GetTerm() // methods to get term from the iterator at that position.
+            }
 	      (sample code how channels are used for iteration with for-range construct 
         https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/go.i#L43
         https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/main.go#L31)
