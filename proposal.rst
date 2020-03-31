@@ -401,10 +401,7 @@ Plan :
 
             for i := range doc.terms(){
               i.GetTerm() // methods to get term from the iterator at that position.
-            }
-	      (sample code how channels are used for iteration with for-range construct 
-        https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/go.i#L43
-        https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/main.go#L31)
+            
         2. Using methods such as Iter.Next() as used in Go lang standard library (Container List https://golang.org/pkg/container/list/).
          
         Both standard method /* for iter.Next(){ ... code } */ and /* for-range construct would be made available for user
@@ -414,7 +411,7 @@ Plan :
         begin and end iterators in one function call as below.
         /* begin,end := doc.Terms() */ 
 
-        code : 
+        Code for Iterator : 
 
 
           %rename (Wrapped_Document) Document;
@@ -459,9 +456,9 @@ Plan :
 
             %}
 
-            */    
-            Usage in main.go 
-            /*
+              
+            Usage : 
+            
 
             for term := range myDoc.Terms() {
 
@@ -469,20 +466,17 @@ Plan :
 
             }
 
-            */
+            
 
       * Go supports errors as return values . A language like c++ have try catch block Go has three constructs for dealing
         with exceptions, they are panic defer and recover.A Panic is similar to an exception which can occur an runtime exception.
         C++ exceptions can be handled in go from swig wrappers as follows(https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/example.i#L16).
         Which ever class function throws an exception in c++ , the wrapped function in Go returns the error as value.
-        Database error handling - https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/go.i#L77
-        https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/main.go#L36
-        error (pastebin) - https://pastebin.com/AuFpiRdQ
         Way errors are handled in OS package of Go standard library - https://golang.org/pkg/os/
         /*
 
          
-        Code for exceptions : 
+        Code for exceptions (DatabaseOpeningError): 
 
 
             %exception {
@@ -505,7 +499,7 @@ Plan :
 
             }
 
-            //Example for Error handling for database class
+            //Rewrapping of NewDatabase function to add a return value for error.
 
             %rename (Wrapped_Database) Database;
 
