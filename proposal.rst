@@ -383,8 +383,17 @@ Plan :
 
             cannot use xapian.TermGeneratorSTEM_NONE (type int) as type xapian.XapianTermGeneratorStem_strategy in argument to tm.Set_stemming_strategy
 
-      * Go supports constants using const keyword. Swig wrapps the constants and #define
-      
+      * Go supports constants which can be defined with const keyword.
+        Swig wrapps all the #define macros and constants declared in %constant directive as Go constants (const).
+        But the constants which are defined using %constant directive during xapian-headers.i is being wrapped as variables.
+
+        Swig generated code :
+
+            var DB_CREATE_OR_OPEN int = _swig_getDB_CREATE_OR_OPEN()
+        
+        DB_CREATE_OR_OPEN is a constant in c++ but this is being wrapped as a variable.So all the constants need proper wrapping to get wrapped as 
+        const DB_CREATE_OR_OPEN = 0
+        
       * Go does not support constructors but this can be done with an extra helper function that takes slice of interfaces
         which swig does by default during the wrapping, but little extra code need to be added for constructors and
         functions when overloaded as they take slice of interfaces in ellipse syntax.
