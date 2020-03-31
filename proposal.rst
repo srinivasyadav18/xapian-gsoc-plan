@@ -400,7 +400,7 @@ Plan :
         1. Using channels one could use for-range construct.
 
             for i := range doc.terms(){
-              i.GetTerm()
+              i.GetTerm() // methods to get term from the iterator at that position.
             }
 	      (sample code how channels are used for iteration with for-range construct 
         https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/go.i#L43
@@ -431,7 +431,7 @@ Plan :
 
                 }
 
-                func (d *Document) Terms()<-chan string {
+                func (d *Document) Terms()<-chan TermItertor {
 
                         ch := make(chan string)
 
@@ -443,7 +443,7 @@ Plan :
 
                                 for !begin.Equals(end) {
 
-                                        ch <- begin.Get_term()
+                                        ch <- begin
 
                                         begin.Next()
 
@@ -465,7 +465,7 @@ Plan :
 
             for term := range myDoc.Terms() {
 
-                fmt.Println(term)
+                fmt.Println(term.Get_term())
 
             }
 
