@@ -339,11 +339,11 @@ Plan :
         For example during wrapping of stem_strategy enum in TermGenerator class swig generates  
         a type for enum (xapian.XapianTermGeneratorStem_strategy) and defines variables for the  elements of that particular enum
         (such as TermGeneratorSTEM_NONE,TermGeneratorSTEM_SOME of type int).
-        So since each variable of one type , TermGeneratorSTEM_NONE(of type int) should be converted to XapianTermGeneratorStem_strategy type
+        So since each variable of int type , TermGeneratorSTEM_NONE(of type int) should be converted to XapianTermGeneratorStem_strategy type
         before passing to function which needs the element an enum as an argument.
             
             
-        swig generated code :
+        Swig generated code :
 
             type XapianTermGeneratorStem_strategy int
 
@@ -383,12 +383,7 @@ Plan :
 
             cannot use xapian.TermGeneratorSTEM_NONE (type int) as type xapian.XapianTermGeneratorStem_strategy in argument to tm.Set_stemming_strategy
 
-
-        The way swig wraps the enums is not that natural and there should type conversions before passing to appropriate 
-        function for proper functioning. (https://pastebin.com/X8K1q9Rh)
-
-        Rewrap the go code(which does conversions before passing to the that particular function)
-        in to wrapper for enums using swig %insert(go_wrapper).(https://github.com/srinivasyadav18/xapian-gsoc-plan/blob/master/example.i#L51)
+      * Go supports constants using const keyword. Swig wrapps the constants and #define
       
       * Go does not support constructors but this can be done with an extra helper function that takes slice of interfaces
         which swig does by default during the wrapping, but little extra code need to be added for constructors and
